@@ -1,0 +1,65 @@
+asset_library:
+  master_funds:
+    UBS (Lux) Equity Fund - China Opprtunity (USD) I-A1-acc: 
+      ISIN: 'LU1017642064:USD'
+      morningstar_id: 'F0GBR04AOC]2]0]FOGBR$$ALL'
+      financialtimes_id: '535681481'
+    Nikko AM ARK Disruptive Innovation Fund A USD Acc:
+      ISIN: 'LU1861556378:USD'
+      morningstar_id:
+      financialtimes_id: '121045898'
+    Allianz Global Investors Fund - Allianz Global Artificial Intelligence AT USD:
+      ISIN: 'LU1548497426:USD'
+      financialtimes_id: '535672904'
+    CS Investment Funds 2 - Credit Suisse (Lux) Digital Health Equity Fund IB USD:
+      ISIN: 'LU1683285750:USD'
+      financialtimes_id: '535728664'
+    Allianz Global Investors Fund - Allianz China A Shares PT USD:
+      ISIN: 'LU1997246811:USD'
+      financialtimes_id: '558535028'
+    Brookfield Global Renewables and Sustainable Infrastructure UCITS Fund USD Institutional Acc Cls E:
+      ISIN: 'IE00BKVDGT87:USD'
+      financialtimes_id: '617027774'
+    Baillie Gifford Positive Change Fund B Accumulation:
+     ISIN: 'GB00BYVGKV59:GBX'
+     financialtimes_id: '108019441'
+    BlackRock Global Funds - Sustainable Energy Fund I2:
+      ISIN: 'LU0534476519:USD'
+      financialtimes_id: '129519791'
+
+  thai_funds:
+    KT-WTAI-A:
+      ISIN:
+      finnomena_id: 'F000010MH0'
+      master_fund: Allianz Global Investors Fund - Allianz Global Artificial Intelligence AT USD
+    TGHDIGI:
+      ISIN:
+      finnomena_id: 'F000013BHG'
+      master_fund: CS Investment Funds 2 - Credit Suisse (Lux) Digital Health Equity Fund IB USD
+    KT-Ashares-A:
+      ISIN:
+      finnomena_id: 'F000015KLW'
+      master_fund: Allianz Global Investors Fund - Allianz China A Shares PT USD
+    TMB-ES-GINNO:
+      ISIN:
+      finnomena_id: 'F000015YHQ'
+      master_fund: Nikko AM ARK Disruptive Innovation Fund A USD Acc
+    T-ES-GGREEN:
+      ISIN:
+      finnomena_id: 'F0000164X1'
+      master_fund: Brookfield Global Renewables and Sustainable Infrastructure UCITS Fund USD Institutional Acc Cls E
+    K-CHANGE-A(A):
+      ISIN:
+      finnomena_id: 'F000013OM1'
+      master_fund: Baillie Gifford Positive Change Fund B Accumulation
+    MRENEW-A:
+      ISIN:
+      finnomena_id: 'F000016D1J'
+      master_fund: BlackRock Global Funds - Sustainable Energy Fund I2
+    TMBCOF:
+      ISIN:
+      finnomena_id: 'F00000UKNK'
+      master_fund: UBS (Lux) Equity Fund - China Opprtunity (USD) I-A1-acc
+
+
+
