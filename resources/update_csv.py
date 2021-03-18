@@ -14,8 +14,9 @@ class UpdateCSV():
         self.storage_client = storage.Client.from_service_account_json(self.credential_path)
         self.bucket_name = bucket_name
 
-        self.finno_port_csv = 'finno_port_status.csv'
-        self.finno_compo_csv = 'finno_port_compo.csv'
+        
+        self.file_name_dict = load_yaml('config/keys.yaml')['file_name']
+
         self.blobs = self.get_blobs()
 
         self.usr_pass = usr_pass
@@ -63,7 +64,7 @@ class UpdateCSV():
         _, historical_value, _ = finno_api.get_port_status("DIY")
         historical_value = historical_value.set_index('portfolio_date')
 
-        self.update_file(historical_value, self.finno_port_csv)
+        self.update_file(historical_value, self.file_name_dict['finno_port_status'])
 
         # file_name = self.finno_port_csv
         # if file_name not in self.blobs:
@@ -89,7 +90,7 @@ class UpdateCSV():
         compositions.columns = pd.MultiIndex.from_tuples(compositions.columns, names=['sec_name','attributes'])
         compositions.index = [portfolio_date]
 
-        self.update_file(compositions, self.finno_compo_csv, header=[0,1])
+        self.update_file(compositions, self.file_name_dict['finno_port_compo'], header=[0,1])
         # file_name = self.finno_compo_csv
         # if file_name not in self.blobs:
         #     self.upload_blob(compositions, file_name)
@@ -99,13 +100,13 @@ class UpdateCSV():
         
         # return compositions
     
-    def test_update(self):
+    def update_log(self):
         now = datetime.now()
         # dd/mm/YY H:M:S
-        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-        df = pd.DataFrame([dt_string])
+        dt_string = now.strftime("%Y/%m/%d %H:%M:%S") + ' (UTC)'
+        df = pd.DataFrame([dt_string], columns=['update_time'])
 
-        self.update_file(df, 'test.csv')
+        self.update_file(df, self.file_name_dict['update_log'])
 
 # usr_pass = load_yaml('config/usr_pass.yaml')
 # update_csv = update_csv(usr_pass)

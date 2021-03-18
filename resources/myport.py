@@ -16,17 +16,19 @@ class MyPortfolio():
         self.storage_client = storage.Client.from_service_account_json(self.credential_path)
         self.bucket_name = bucket_name
 
-        self.finno_port_csv = 'finno_port_status.csv'
-        self.finno_compo_csv = 'finno_port_compo.csv'
+        self.file_name_dict = load_yaml('config/keys.yaml')['file_name']
+
+
+        self.update_csv = UpdateCSV(self.usr_pass)
 
         # login
         self.finno_api.login()
     
     def update(self):
-        update_csv = UpdateCSV(self.usr_pass)
+        
         # update_csv.update_finno_port()
         # update_csv.update_finno_sec_com()
-        update_csv.test_update()
+        self.update_csv.update_log()
 
     def get_status(self):
         
@@ -38,13 +40,28 @@ class MyPortfolio():
         return port_status
     
     def get_finno_status_ts(self):
-        df = download_blob_csv(self.storage_client, self.bucket_name, self.finno_port_csv)
+        file_name = self.file_name_dict['finno_port_status']
+        # check if file exists
+        if file_name in self.update_csv.blobs:
+            df = download_blob_csv(self.storage_client, self.bucket_name, file_name)
+        else:
+            df = None
         return df 
     
     def get_finno_compo(self):
-        df = download_blob_csv(self.storage_client, self.bucket_name, self.finno_compo_csv, header=[0,1])
+        file_name = self.file_name_dict['finno_port_compo']
+        # check if file exists
+        if file_name in self.update_csv.blobs:
+            df = download_blob_csv(self.storage_client, self.bucket_name, file_name, header=[0,1])
+        else:
+            df = None
         return df 
 
-    def get_test(self):
-        df = download_blob_csv(self.storage_client, self.bucket_name, 'test.csv')
+    def get_update_log(self):
+        file_name = self.file_name_dict['update_log']
+        # check if file exists
+        if file_name in self.update_csv.blobs:
+            df = download_blob_csv(self.storage_client, self.bucket_name, file_name)
+        else:
+            df = None
         return df

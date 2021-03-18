@@ -12,14 +12,23 @@ port_status_ts = port.get_finno_status_ts()
 port_compo = port.get_finno_compo()
 test_csv = port.get_test()
 # st.write(pd.DataFrame([port_status], columns=port_status.keys()))
+
+
+# --------------------------------------------------------------------------------
+# Streamlit Interface
+# --------------------------------------------------------------------------------
+st.title("Portfolio Dashboard")
+
+update_log = port.get_update_log()
+if update_log is None:
+    st.text(port.get_update_log())
+else:
+    st.text('last update at: ' + update_log.iloc[-1,0])
+
 st.line_chart(port_status_ts['value'])
-submit = st.button('refresh')
+refresh = st.button('refresh')
 
 st.write(test_csv)
 
-if submit:
+if refresh:
     port.update()
-    # #upload_blob('portfolio-dashboard-poch.appspot.com', 'data/historical_price.csv', 'historical_proce.csv')
-    # df = pd.read_csv('gs://portfolio-dashboard-poch.appspot.com/historical_price.csv')
-    # st.write(df)
-    # #requests.post('http://127.0.0.1:8000/letters', json=new_candidates)
