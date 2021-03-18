@@ -1,4 +1,6 @@
 from resources.myport import MyPortfolio
 
-port = MyPortfolio()
-port.update()
+
+def update_port():
+    port = MyPortfolio()
+    port.update()
