@@ -10,8 +10,9 @@ from resources.utils import load_yaml, download_blob_csv
 
 class UpdateCSV():
     def __init__(self, usr_pass, credential_folder = 'gcs_cred', bucket_name='portfolio-dashboard-poch.appspot.com'):
-        self.credential_path = credential_folder + '/' + os.listdir(credential_folder)[0]
-        self.storage_client = storage.Client.from_service_account_json(self.credential_path)
+        #self.credential_path = credential_folder + '/' + os.listdir(credential_folder)[0]
+        #self.storage_client = storage.Client.from_service_account_json(self.credential_path)
+        self.storage_client = storage.Client()
         self.bucket_name = bucket_name
 
         
