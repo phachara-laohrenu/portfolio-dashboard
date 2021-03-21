@@ -16,7 +16,7 @@ class MyPortfolio():
         self.storage_client = storage.Client()
         self.bucket_name = bucket_name
 
-        self.usr_pass = download_blob(self.storage_client, 'usr_pass.yaml')
+        self.usr_pass = download_blob(self.storage_client, self.bucket_name, 'usr_pass.yaml')
         self.finno_api = finnomenaAPI(email=self.usr_pass['finnomena']['usr'], 
                         password=self.usr_pass['finnomena']['password'])
 
