@@ -5,7 +5,7 @@ from finnomena_api import finnomenaAPI
 import os
 from datetime import datetime
 
-from resources.utils import load_yaml, download_blob_csv
+from resources.utils import load_yaml, download_blob
 
 
 class UpdateCSV():
@@ -31,7 +31,7 @@ class UpdateCSV():
     
     def download_blob(self, blob_name,header=0):
 
-        df = download_blob_csv(self.storage_client, self.bucket_name, blob_name, header=header)      
+        df = download_blob(self.storage_client, self.bucket_name, blob_name, header=header)      
         # bucket = self.storage_client.get_bucket(self.bucket_name)
         # blob = bucket.blob(blob_name)
         # downloaded_blob = blob.download_as_bytes()

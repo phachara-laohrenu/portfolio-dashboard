@@ -3,6 +3,7 @@ from datetime import datetime
 from dateutil import relativedelta
 import pandas as pd
 from io import StringIO
+import os
 from dateutil.parser import parse
 from dateutil.rrule import rrule, DAILY, MO, TU, WE, TH, FR
 
@@ -11,14 +12,22 @@ def load_yaml(path: str):
         yaml_dict = yaml.load(file, Loader=yaml.FullLoader)
     return yaml_dict
 
-def download_blob_csv(storage_client, bucket_name, blob_name, header=0):
+def download_blob(storage_client, bucket_name, blob_name, header=0):
     bucket = storage_client.get_bucket(bucket_name)
     blob = bucket.blob(blob_name)
     downloaded_blob = blob.download_as_bytes()
-    s = str(downloaded_blob,'utf-8')
-    data = StringIO(s) 
-    df = pd.read_csv(data, index_col=0, header = header)
-    return df
+
+    filename, file_extension = os.path.splitext(blob_name)
+
+    if file_extension == 'csv':
+        s = str(downloaded_blob,'utf-8')
+        data = StringIO(s) 
+        out = pd.read_csv(data, index_col=0, header = header)
+
+    elif file_extension == 'yaml':
+        out = yaml.load(downloaded_blob)
+
+    return out
 
 def get_key(mydict, value):
     return list(mydict.keys())[list(mydict.values()).index(value)]
