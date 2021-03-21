@@ -24,9 +24,6 @@ class MyPortfolio():
 
 
         self.update_csv = UpdateCSV(self.usr_pass)
-
-        # login
-        self.finno_api.login()
     
     def update(self):
         self.update_csv.update_finno_port()
@@ -34,7 +31,6 @@ class MyPortfolio():
         self.update_csv.update_log()
 
     def get_status(self):
-        
         # finnomena
         finno_port_status, _, _ = self.finno_api.get_port_status("DIY")
 
