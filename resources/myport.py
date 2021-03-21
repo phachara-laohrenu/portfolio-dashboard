@@ -12,8 +12,9 @@ class MyPortfolio():
         self.finno_api = finnomenaAPI(email=self.usr_pass['finnomena']['usr'], 
                         password=self.usr_pass['finnomena']['password'])
 
-        self.credential_path = credential_folder + '/' + os.listdir(credential_folder)[0]
-        self.storage_client = storage.Client.from_service_account_json(self.credential_path)
+        # self.credential_path = credential_folder + '/' + os.listdir(credential_folder)[0]
+        # self.storage_client = storage.Client.from_service_account_json(self.credential_path)
+        self.storage_client = storage.Client()
         self.bucket_name = bucket_name
 
         self.file_name_dict = load_yaml('config/keys.yaml')['file_name']
