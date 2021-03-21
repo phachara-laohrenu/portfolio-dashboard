@@ -1,17 +1,3 @@
-sources:
-  morningstar:
-    url:
-      timeseries_price: 'https://tools.morningstar.co.uk/api/rest.svc/timeseries_price/t92wz0sj7c'
-      timeseries_cumulativereturn: 'https://tools.morningstar.co.uk/api/rest.svc/timeseries_cumulativereturn/t92wz0sj7c'
-
-  financialtimes:
-    url:
-      timeseries_price: 'https://markets.ft.com/data/equities/ajax/get-historical-prices'
-
-  finnomena:
-    url:
-      timeseries_price: https://www.finnomena.com/fn3/api/fund/nav/q
-    
 file_name:
   update_log: update_log.csv
   finno_port_status: finno_port_status.csv

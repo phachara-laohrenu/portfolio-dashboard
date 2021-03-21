@@ -136,7 +136,6 @@ def get_dates(start_date, end_date=None):
     dates_list = [n.strftime('%Y-%m-%d') for n in result]
     return dates_list
 
-    
 #print(get_assetinfotable())
 
 
