@@ -19,13 +19,16 @@ def download_blob(storage_client, bucket_name, blob_name, header=0):
 
     filename, file_extension = os.path.splitext(blob_name)
 
-    if file_extension == 'csv':
+    if file_extension == '.csv':
         s = str(downloaded_blob,'utf-8')
         data = StringIO(s) 
         out = pd.read_csv(data, index_col=0, header = header)
 
-    elif file_extension == 'yaml':
+    elif file_extension == '.yaml':
         out = yaml.load(downloaded_blob)
+    
+    else:
+        raise ValueError("Invalid file type: " + file_extension)
 
     return out
 
