@@ -2,5 +2,5 @@ file_name:
   update_log: update_log.csv
   finno_port_status: finno_port_status.csv
   finno_port_compo: finno_port_compo.csv
-  feeder_info: feeder_info.csv
+  feeder_info: feeder_info.yaml
   

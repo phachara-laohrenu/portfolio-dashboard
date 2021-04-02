@@ -7,20 +7,16 @@ from datetime import datetime
 import yaml
 
 from resources.utils import load_yaml, download_blob
-
+from resources.retriever import Retriever
 
 class UpdateCSV():
-    def __init__(self, usr_pass, bucket_name='portfolio-dashboard-poch.appspot.com'):
+    def __init__(self, bucket_name='portfolio-dashboard-poch.appspot.com'):
         self.storage_client = storage.Client()
         self.bucket_name = bucket_name
 
         self.file_name_dict = load_yaml('config/keys.yaml')['file_name']
 
         self.blobs = self.get_blobs()
-
-        self.usr_pass = usr_pass
-
-        self.finno_api = finnomenaAPI(email=self.usr_pass['finnomena']['usr'], password=self.usr_pass['finnomena']['password'])
 
 
     def upload_blob(self, data, destination_blob_name):
@@ -57,14 +53,16 @@ class UpdateCSV():
             self.upload_blob(file, file_name)
 
 
-    def update_finno_port(self):
-        _, historical_value, _ = self.finno_api.get_port_status("DIY")
+    def update_finno_port(self,usr_pass):
+        finno_api = finnomenaAPI(email=usr_pass['finnomena']['usr'], password=usr_pass['finnomena']['password'])
+        _, historical_value, _ = finno_api.get_port_status("DIY")
         historical_value = historical_value.set_index('portfolio_date')
 
         self.update_file(historical_value, self.file_name_dict['finno_port_status'])
 
-    def update_finno_sec_com(self):
-        _, _, compositions = self.finno_api.get_port_status("DIY")
+    def update_finno_sec_com(self,usr_pass):
+        finno_api = finnomenaAPI(email=usr_pass['finnomena']['usr'], password=usr_pass['finnomena']['password'])
+        _, _, compositions = finno_api.get_port_status("DIY")
         portfolio_date = compositions['portfolio_date'][0]
         compositions = compositions[['sec_name','nav_date', 'market_value', 'weight', 'return', 'cost', 'total_unit', 'avg_price', 'current_nav']]
         compositions = compositions.set_index('sec_name')
@@ -77,7 +75,7 @@ class UpdateCSV():
         compositions.columns = pd.MultiIndex.from_tuples(compositions.columns, names=['sec_name','attributes'])
         compositions.index = [portfolio_date]
 
-        self.update_file(compositions, self.file_name_dict['finno_port_compo'], header=[0,1])
+        self.update_file(compositions, self.file_name_dict['finno_port_compo'], header=[0,1])        
     
     def update_log(self):
         now = datetime.now()
@@ -95,12 +93,12 @@ class UpdateCSV():
             feeder_dict = {}
 
         intersection = list(set(feeder_dict.keys()) & set(secs))
-
+        retriever = Retriever()
         for fund_name in secs:
             if fund_name in intersection:
                 continue
 
-            fund_obj = self.get_fund_obj(fund_name)
+            fund_obj = retriever.get_fund_obj(fund_name)
             
             if fund_obj.feeder_obj is None:
                 feeder_dict[fund_name] = None
@@ -109,7 +107,7 @@ class UpdateCSV():
                 feeder_fullname = fund_obj.feeder_obj.sec_name
                 feeder_info = {'fullname':fund_obj.feeder_obj.sec_name,
                                'symbol':fund_obj.feeder_obj.symbol,
-                               'xid':fund_obj.feeder_obj.get_idx()
+                               'xid':fund_obj.feeder_obj.get_idx(),
                                'allocation':1}
                 feeder_dict[fund_name] = {feeder_name: feeder_info}
         

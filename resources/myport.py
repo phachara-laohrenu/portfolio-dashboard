@@ -19,11 +19,15 @@ class MyPortfolio():
         self.file_name_dict = load_yaml('config/keys.yaml')['file_name']
 
 
-        self.update_csv = UpdateCSV(self.usr_pass)
+        self.update_csv = UpdateCSV()
     
     def update(self):
-        self.update_csv.update_finno_port()
-        self.update_csv.update_finno_sec_com()
+        self.update_csv.update_finno_port(self.usr_pass)
+        self.update_csv.update_finno_sec_com(self.usr_pass)
+
+        _, _, compositions = self.finno_api.get_port_status("DIY")
+        self.update_csv.update_feeder(list(compositions['sec_name']))
+
         self.update_csv.update_log()
 
     def get_status(self):
