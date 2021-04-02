@@ -86,7 +86,7 @@ class UpdateCSV():
 
         self.update_file(df, self.file_name_dict['update_log'])
 
-    def update_feeder(self):
+    def update_feeder(self, secs):
         # check 
         file_name = self.file_name_dict['feeder_info']
         if file_name in self.blobs:
@@ -94,8 +94,6 @@ class UpdateCSV():
         else:
             feeder_dict = {}
 
-        _, _, compositions = self.finno_api.get_port_status("DIY")
-        secs = compositions['sec_name']
         intersection = list(set(feeder_dict.keys()) & set(secs))
 
         for fund_name in secs:
