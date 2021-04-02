@@ -5,7 +5,7 @@ import pandas as pd
 from io import StringIO
 import os
 from dateutil.parser import parse
-from dateutil.rrule import rrule, DAILY, MO, TU, WE, TH, FR
+from dateutil.rrule import rrule, DAILY, MO, TU, WE, TH, FR, SA, SU
 
 def load_yaml(path: str):
     with open(path) as file:
@@ -136,7 +136,25 @@ def get_dates(start_date, end_date=None):
     dates_list = [n.strftime('%Y-%m-%d') for n in result]
     return dates_list
 
-#print(get_assetinfotable())
+def remove_weekends(time_series):
+    """
+    time_series: dataframe of an asset price with date as index
+    """
+    end_date=datetime.now().strftime('%Y-%m-%d')
+    start_date = time_series.index.values[0]
+    result = rrule(
+    DAILY,
+    byweekday=(SA,SU),
+    dtstart=parse(start_date),
+    until=parse(end_date)
+    )
+    weekend_list = [n.strftime('%Y-%m-%d') for n in result]
+    date_list = time_series.index.values
+    drop_dates = list(set(weekend_list) & set(date_list))
+    
+    time_series = time_series.drop(drop_dates)
+
+    return time_series
 
 
                 
