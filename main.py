@@ -9,6 +9,6 @@ def update_port(event, context):
 
     # update feeder
     updater = UpdateCSV()
-    _, _, compositions = UpdateCSV.finno_api.get_port_status("DIY")
+    _, _, compositions = updater.finno_api.get_port_status("DIY")
     secs = list(compositions['sec_name'])
     updater.update_feeder(secs)
