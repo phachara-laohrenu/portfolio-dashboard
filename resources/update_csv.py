@@ -85,6 +85,7 @@ class UpdateCSV():
         self.update_file(df, self.file_name_dict['update_log'])
 
     def update_feeder(self, secs):
+        print(secs)
         # check 
         file_name = self.file_name_dict['feeder_info']
         if file_name in self.blobs:
