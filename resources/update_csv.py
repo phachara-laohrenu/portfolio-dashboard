@@ -103,16 +103,21 @@ class UpdateCSV():
             if fund_obj.feeder_obj is None:
                 feeder_dict[fund_name] = None
             else:
+                try:
+                    xid = fund_obj.feeder_obj.get_idx()
+                except:
+                    xid = None
+
                 feeder_name = fund_obj.fund_info['feeder_fund']
                 feeder_fullname = fund_obj.feeder_obj.sec_name
                 feeder_info = {'fullname':fund_obj.feeder_obj.sec_name,
                                'symbol':fund_obj.feeder_obj.symbol,
-                               'xid':fund_obj.feeder_obj.get_idx(),
+                               'xid':xid,
                                'allocation':1}
                 feeder_dict[fund_name] = {feeder_name: feeder_info}
         
-        # upload
-        self.upload_blob(feeder_dict, file_name)
+            # upload
+            self.upload_blob(feeder_dict, file_name)
         
 
                 

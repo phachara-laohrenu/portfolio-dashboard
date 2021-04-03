@@ -25,6 +25,7 @@ class fundObj(object):
 
         self.sec_name = sec_name
         self.fund_info = self.finnoapi.get_fund_info(self.sec_name)
+        # print(self.fund_info['feeder_fund'])
         self.feeder_obj = None
         self.feeder_info = self.get_feeder_info()
         

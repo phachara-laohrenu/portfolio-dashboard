@@ -59,7 +59,6 @@ class Retriever:
 
         for fund_name in fund_list:
             fund_obj = self.get_fund_obj(fund_name)
-            print(fund_name)
             
             if fund_obj.feeder_obj is None:
                 dft = fund_obj.get_historical()
